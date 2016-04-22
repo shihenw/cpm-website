@@ -31,7 +31,7 @@ html, body {
   font-size: 30px;
   float: left;
   color: rgb(190,190,190);
-  margin-top: -4px;
+  margin-top: -6px;
 }
 
 #logo a {
@@ -126,4 +126,40 @@ html, body {
 
 #video-names {
   margin-top: 0px;
+}
+
+#gallery-c1 {
+  vertical-align: top;
+  padding-right: 12px;
+}
+
+#gallery-c2 {
+  vertical-align: top;
+  padding-right: 12px;
+}
+
+#gallery-c3 {
+  vertical-align: top;
+  padding-right: 12px;
+}
+
+#gallery-c4 {
+  vertical-align: top;
+  padding-top: 0;
+}
+
+.gallery-img {
+  width: 216px;
+  display: block;
+  margin-top: 12px;
+}
+
+#gallery-title {
+  font-size: 20px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.force-scroll {
+  overflow-y: scroll;
 }

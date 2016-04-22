@@ -12,7 +12,7 @@ function init() {
     success: function(data) {
       $(data).find("a").each(function() {
         var filename = $(this).attr("href");
-        if(filename.indexOf('/') == -1) {
+        if(filename.indexOf('.jpg') > -1) {
           filelist.push($(this).attr("href"));
         }
       });

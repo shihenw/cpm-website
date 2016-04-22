@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Convolutional Pose Machines</title>
+    <link href="css/main.css" media="screen" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <div id="header-titles">
+          Convolutional Pose Machines: <br/>
+          A Deep Architecture with Intermediate Supervision
+        </div>
+        <div id="header-arthors">
+          Shih-En Wei &nbsp;&nbsp;&nbsp; <a href="http://www.cs.cmu.edu/~vramakri/">Varun Ramakrishna</a> &nbsp;&nbsp;&nbsp; Yaser Sheikh
+        </div>
+        <div id="header-institute">
+          The Robotics Institute &nbsp;&nbsp;&nbsp; Carnegie Mellon University
+        </div>
+      </div>
+      <div id="video">
+        <h3 id="video-title">Demo Videos (frame by frame detection)</h3>
+        <p id="video-names">
+           <a href="javascript:void(0)" data-value="1" id="s1" class="video-item">Roger and Rafa</a>&nbsp;|&nbsp;
+           <a href="javascript:void(0)" data-value="2" id="s2" class="video-item">Dancing Cop</a>&nbsp;|&nbsp;
+           <a href="javascript:void(0)" data-value="3" id="s3" class="video-item">Freestyle</a>&nbsp;|&nbsp;
+           <a href="javascript:void(0)" data-value="4" id="s4" class="video-item">Ronald</a>&nbsp;|&nbsp;
+           <a href="javascript:void(0)" data-value="5" id="s5" class="video-item">Safe Cycling</a>
+        </p>
+        <p id="video-explanation">Model trained on LEEDS Sport Dataset with observer centric annotation</p>
+        <div id="video-container">
+          <video class="vinstance" controls="controls" src="video/ConvPoseMachine.mp4" width="860"></video>
+          <!--video class="vinstance" controls="controls" src="video/cop_video2.m4v" height="400"></video>-->
+          <!--video class="vinstance" controls="controls" src="video/freestyle.mp4" height="400"></video>
+          <video class="vinstance" controls="controls" src="video/ronaldinho_new.mov" height="400"></video>
+          <video class="vinstance" controls="controls" src="video/safe_cycling2.m4v" height="400"></video>-->
+        </div>
+      </div>
+      <div id="body">
+        <div id="body-abstract">
+          <h3>Overview</h3> 
+          <p><a href="http://www.cs.cmu.edu/~vramakri/poseMachines.html">Pose Machines</a> provide a powerful modular framework for articulated pose estimation.
+          The sequential prediction framework allows for the learning of rich implicit spatial models, but relies on manually designed features for representing image and spatial context.</p>
+          
+          </p>In this work, we incorporate a convolutional network architecture into the pose machine framework allowing the learning of representations for both image and spatial context directly from data. 
+          The multiple modules, or levels and stages, in the proposed system can be trained jointly, given that the overall system can be seen as a deep network.
+          In the same time, our approach addresses the characteristic difficulty of vanishing gradients
+          during training by providing a natural learning objective function that enforces intermediate supervision, thereby replenishing back-propagated gradients and conditioning the learning procedure. 
+          We have achieved state-of-the-art performance and outperform competing methods on standard
+          benchmarks: <a href="http://vision.grasp.upenn.edu/cgi-bin/index.php?n=VideoLearning.FLIC">FLIC</a> and <a href="http://www.comp.leeds.ac.uk/mat4saj/lsp.html">LEEDS Sport Dataset</a>.</p>
+        </div>
+        <div id="body-img">
+          <img src="img/teaser.png" height="455" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

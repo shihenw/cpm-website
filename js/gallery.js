@@ -11,9 +11,11 @@ function init() {
     url: "img/gallery/",
     success: function(data) {
       $(data).find("a").each(function() {
-        filelist.push($(this).attr("href"));
+        var filename = $(this).attr("href");
+        if(filename.indexOf('/') == -1) {
+          filelist.push($(this).attr("href"));
+        }
       });
-      filelist.shift();
       addImgs(filelist);
     }
   });

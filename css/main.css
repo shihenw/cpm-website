@@ -87,7 +87,7 @@ html, body {
 
 #content a {
   text-decoration: none;
-  color: rgb(80,80,80);
+  color: #AB1B2A;
 }
 
 #content a:hover {
@@ -128,24 +128,14 @@ html, body {
   margin-top: 0px;
 }
 
-#gallery-c1 {
+.gallery-td-left {
   vertical-align: top;
   padding-right: 12px;
 }
 
-#gallery-c2 {
+.gallery-td-right {
   vertical-align: top;
-  padding-right: 12px;
-}
-
-#gallery-c3 {
-  vertical-align: top;
-  padding-right: 12px;
-}
-
-#gallery-c4 {
-  vertical-align: top;
-  padding-top: 0;
+  padding-right: 0;
 }
 
 .gallery-img {
@@ -160,6 +150,28 @@ html, body {
   margin-bottom: 10px;
 }
 
+.stage-td-left {
+  vertical-align: top;
+  padding-right: 10px;
+}
+
+.stage-td-right {
+  vertical-align: top;
+  padding-right: 0;
+}
+
+.stage-img {
+  width: 140px;
+}
+
+.stage-text {
+  margin-top: -10px;
+}
+
 .force-scroll {
   overflow-y: scroll;
+}
+
+.menu-bold {
+  font-weight: bold !important;
 }

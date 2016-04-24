@@ -53,8 +53,10 @@ function ajaxFunction() {
 }
 
 function display(filelist) {
+  var path = "img/demo/";
   // new an empty array
   var part_stage_filelist = [];
+  var pose_filelist = ['',''];
   for (var i = 0; i < 14; i++) {
     var part = []
     for (var j = 0; j < 6; j++) {
@@ -65,6 +67,14 @@ function display(filelist) {
   // fill in part and stage
   for (var i = 0; i < filelist.length; i++) {
     var res1 = filelist[i].split("_");
+    if(res1[res1.length - 1].indexOf('sg') == -1) {
+      if(res1[res1.length - 1].indexOf('pose') == -1) {
+        pose_filelist[0] = filelist[i];
+      } else {
+        pose_filelist[1] = filelist[i];
+      }
+      continue;
+    }
     var res2 = res1[res1.length - 1].split(".");
     var part_num = findEndNumInStr(res1[res1.length - 2]);
     var stage_num = findEndNumInStr(res2[res2.length - 2]);
@@ -73,7 +83,6 @@ function display(filelist) {
   // add events
   $("#body-part-names").find("a").on("click", function() {
     var part_num = $(this).data("value");
-    var path = "img/demo/";
     for (var i = 0; i < 6; i++) {
       var $img_container = $("#stage-" + (i + 1));
       $img_container.children().remove();
@@ -81,6 +90,9 @@ function display(filelist) {
     }
   });
   $("#b1").click();
+  // add pose and original images
+  $("#pose-1").append($('<img class="pose-img" src="' + path + pose_filelist[0] + '"/>'));
+  $("#pose-2").append($('<img class="pose-img" src="' + path + pose_filelist[1] + '"/>'));
 }
 
 function findEndNumInStr(str) {

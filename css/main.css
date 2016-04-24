@@ -105,6 +105,7 @@ html, body {
 }
 
 #abstract-table {
+  width: 100%;
   margin: 0;
 }
 
@@ -166,6 +167,39 @@ html, body {
 
 .stage-text {
   margin-top: -10px;
+}
+
+.pose-td-left {
+  vertical-align: top;
+  padding-right: 8px;
+}
+
+.pose-td-right {
+  vertical-align: top;
+  padding-left: 2px;
+}
+
+.pose-td-left .pose-img {
+  float: right;
+  width: 140px;
+}
+
+.pose-td-right .pose-img {
+  float: left;
+  width: 140px;
+}
+
+#gallery {
+  width: 100%;
+}
+
+#small-image-container {
+  width: 100%;
+}
+
+#large-image-container {
+  margin-top: 30px;
+  width: 100%;
 }
 
 .force-scroll {

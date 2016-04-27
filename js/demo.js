@@ -52,7 +52,7 @@ function ajaxFunction() {
   });
 }
 
-function display(filelist,path) {
+function display(filelist, path) {
   // new an empty array
   var part_stage_filelist = [];
   var pose_filelist = ['', ''];
@@ -90,8 +90,12 @@ function display(filelist,path) {
   });
   $("#b1").click();
   // add pose and original images
+  $("#pose-1").children().remove();
   $("#pose-1").append($('<img class="pose-img" src="' + path + pose_filelist[0] + '"/>'));
+  $("#pose-2").children().remove();
   $("#pose-2").append($('<img class="pose-img" src="' + path + pose_filelist[1] + '"/>'));
+  // show result
+  showUI();
 }
 
 function findEndNumInStr(str) {
@@ -104,7 +108,7 @@ function getFilelist(path) {
     url: path,
     success: function(data) {
       var all_anchor_tags = data.match(/<a[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>/g);
-      for (var i=0; i<all_anchor_tags.length; i++) {
+      for (var i = 0; i < all_anchor_tags.length; i++) {
         var filename = $(all_anchor_tags[i]).attr("href");
         if (filename.indexOf('.png') > -1 || filename.indexOf('.jpg') > -1) {
           filelist.push(filename);
@@ -115,28 +119,47 @@ function getFilelist(path) {
   });
 }
 
+function submitFile(formData) {
+  $.ajax({
+    url: 'http://pearl.vasc.ri.cmu.edu:8080/cpm-backend/process_image',
+    type: 'post',
+    data: formData,
+    cache: false,
+    processData: false,
+    contentType: false,
+    //beforeSend: function(xhr) {
+    //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+    //},
+    success: function(result) {
+      console.log("server:", result);
+      var dir = "../cpm-backend/"
+      var path = dir + result + "/";
+      getFilelist(path);
+    }
+  });
+}
+
+function hideUI() {
+  $("#large-image-container").hide();
+  $("#body-part-names").hide();
+  $("#small-image-container").hide();
+}
+
+function showUI() {
+  $("#large-image-container").show();
+  $("#body-part-names").show();
+  $("#small-image-container").show();
+}
+
 function init() {
   $("#file").on("change", function() {
+    hideUI();
     var formData = new FormData();
     formData.append('file', this.files[0]);
-    $.ajax({
-      url: 'http://pearl.vasc.ri.cmu.edu:8080/cpm-backend/process_image',
-      type: 'post',
-      data: formData,
-      cache: false,
-      processData: false,
-      contentType: false,
-      //beforeSend: function(xhr) {
-      //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-      //},
-      success: function(result) {
-        console.log("server:", result);
-        var dir = "../cpm-backend/"
-        // hard code the path for now
-        var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
-        getFilelist(path);
-      }
-    });
+    //submitFile(formData);
+    var dir = "../cpm-backend/"
+    var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+    getFilelist(path);
   });
 }
 

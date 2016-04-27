@@ -195,11 +195,17 @@ html, body {
 
 #small-image-container {
   width: 100%;
+  display: none;
 }
 
 #large-image-container {
   margin-top: 30px;
   width: 100%;
+  display: none;
+}
+
+#body-part-names {
+  display: none;
 }
 
 .force-scroll {

@@ -52,12 +52,11 @@ function ajaxFunction() {
   });
 }
 
-function display(filelist) {
-  var path = "img/demo/";
+function display(filelist,path) {
   // new an empty array
   var part_stage_filelist = [];
   var pose_filelist = ['', ''];
-  for (var i = 0; i < 14; i++) {
+  for (var i = 0; i < 15; i++) {
     var part = []
     for (var j = 0; j < 6; j++) {
       part.push('');
@@ -104,13 +103,14 @@ function getFilelist(path) {
   $.ajax({
     url: path,
     success: function(data) {
-      $(data).find("a").each(function() {
-        var filename = $(this).attr("href");
-        if (filename.indexOf('.png') > -1) {
-          filelist.push($(this).attr("href"));
+      var all_anchor_tags = data.match(/<a[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>/g);
+      for (var i=0; i<all_anchor_tags.length; i++) {
+        var filename = $(all_anchor_tags[i]).attr("href");
+        if (filename.indexOf('.png') > -1 || filename.indexOf('.jpg') > -1) {
+          filelist.push(filename);
         }
-      });
-      display(filelist);
+      }
+      display(filelist, path);
     }
   });
 }
@@ -130,15 +130,14 @@ function init() {
       //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
       //},
       success: function(result) {
+        console.log("server:", result);
+        var dir = "../cpm-backend/"
         // hard code the path for now
-        console.log(result);
-        result = "../cpm-backend/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14/";
-        getFilelist(result);
+        var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+        getFilelist(path);
       }
     });
   });
 }
-
-jQuery.support.cors = true;
 
 $(init);

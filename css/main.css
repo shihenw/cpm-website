@@ -215,3 +215,15 @@ html, body {
 .menu-bold {
   font-weight: bold !important;
 }
+
+#is-processing {
+  font-size: 50px;
+  margin-top: 60px;
+  display: none;
+}
+
+#is-server-busy {
+  font-size: 30px;
+  margin-top: 60px;
+  display: none;
+}

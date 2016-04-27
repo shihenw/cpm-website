@@ -11,7 +11,7 @@
   <script src="js/jquery/jquery.min.js" type="text/javascript"></script>
   <script src="js/demo.js" type="text/javascript"></script>
 </head>
-<body>
+<body class="force-scroll">
 <div id="menu-container">
   <div id="menu">
     <div id="logo">
@@ -31,6 +31,12 @@
       Upload an image or click on a sample image &nbsp;&nbsp;
       <input name="file" type="file" id="file">
     </form>
+    <div id="is-server-busy">
+      The server is busy. Please try again later.
+    </div>
+    <div id="is-processing">
+      Processing image ...
+    </div>
     <table id="large-image-container">
       <tr>
         <td id="pose-1" class="pose-td-left">

@@ -1,57 +1,3 @@
-function init() {
-  $("#testBtn").button().on("click", function() {
-    ajaxFunction();
-  });
-
-  //some examination of file when you choose a new one
-  $(':file').change(function() {
-    var file = this.files[0];
-    var name = file.name;
-    var size = file.size;
-    var type = file.type;
-    console.log(name);
-  });
-
-  $(':button').click(function() {
-    var formData = new FormData($('form')[0]);
-    $.ajax({
-      url: 'http://pearl.vasc.ri.cmu.edu/cgi-bin/upload.py',  //Server script to process data
-      type: 'POST',
-      //Ajax events
-      //beforeSend: beforeSendHandler,
-      success: function(data) {
-        console.log("Success! Data: " + data);
-        var img_tag = "<img src=\"" + data + "\" height=\"300\">";
-        console.log(img_tag);
-        $("#div-image").html(img_tag);
-        for (var i = 1; i <= 14; i++) {
-          try {
-            img_tag = "<img src=\"" + "testing/results/" + data.split('/')[1].split(".")[0] + "_heatmap" + i + ".png" + "\" height=\"300\">";
-            $("#div-image").append(img_tag);
-          }
-          catch(err) {
-            console.log("upper body!");
-          }
-        }
-        img_tag = "<img src=\"" + "testing/results/" + data.split('/')[1].split(".")[0] + "_stickman.png" + "\" height=\"300\">";
-        $("#div-image").append(img_tag);
-      },
-      //error: errorHandler,
-      // Form data
-      data: formData,
-      //Options to tell jQuery not to process data or worry about content-type.
-      cache: false,
-      contentType: false,
-      processData: false
-    });
-  });
-}
-function ajaxFunction() {
-  $.get("http://pearl.vasc.ri.cmu.edu/cgi-bin/time.py").done(function(data) {
-    document.myForm.time.value = data;
-  });
-}
-
 function display(filelist, path) {
   // new an empty array
   var part_stage_filelist = [];
@@ -95,7 +41,8 @@ function display(filelist, path) {
   $("#pose-2").children().remove();
   $("#pose-2").append($('<img class="pose-img" src="' + path + pose_filelist[1] + '"/>'));
   // show result
-  showUI();
+  hideIsProcessingUI();
+  showImgUI();
 }
 
 function findEndNumInStr(str) {
@@ -108,13 +55,24 @@ function getFilelist(path) {
     url: path,
     success: function(data) {
       var all_anchor_tags = data.match(/<a[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>/g);
+      var is_server_processing_complete = false;
       for (var i = 0; i < all_anchor_tags.length; i++) {
         var filename = $(all_anchor_tags[i]).attr("href");
         if (filename.indexOf('.png') > -1 || filename.indexOf('.jpg') > -1) {
           filelist.push(filename);
         }
+        if (filename == "COMPLETE") {
+          is_server_processing_complete = true;
+        }
       }
-      display(filelist, path);
+      // check if the server complete the GPU processing
+      if (is_server_processing_complete) {
+        display(filelist, path);
+      } else {
+        setTimeout(function() {
+          getFilelist(path);
+        }, 2000);
+      }
     }
   });
 }
@@ -132,20 +90,46 @@ function submitFile(formData) {
     //},
     success: function(result) {
       console.log("server:", result);
-      var dir = "../cpm-backend/"
-      var path = dir + result + "/";
-      getFilelist(path);
+      if (result == "") {
+        hideIsProcessingUI();
+        showIsServerBusyUI();
+      } else {
+        var dir = "../cpm-backend/"
+        var path = dir + result + "/";
+        getFilelist(path);
+      }
+    },
+    error: function(result) {
+      console.log("server:", result);
+      hideIsProcessingUI();
+      showIsServerBusyUI();
     }
   });
 }
 
-function hideUI() {
+function showIsServerBusyUI() {
+  $("#is-server-busy").show();
+}
+
+function hideIsServerBusyUI() {
+  $("#is-server-busy").hide();
+}
+
+function showIsProcessingUI() {
+  $("#is-processing").show();
+}
+
+function hideIsProcessingUI() {
+  $("#is-processing").hide();
+}
+
+function hideImgUI() {
   $("#large-image-container").hide();
   $("#body-part-names").hide();
   $("#small-image-container").hide();
 }
 
-function showUI() {
+function showImgUI() {
   $("#large-image-container").show();
   $("#body-part-names").show();
   $("#small-image-container").show();
@@ -153,13 +137,17 @@ function showUI() {
 
 function init() {
   $("#file").on("change", function() {
-    hideUI();
-    var formData = new FormData();
-    formData.append('file', this.files[0]);
-    submitFile(formData);
-    //var dir = "../cpm-backend/"
-    //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
-    //getFilelist(path);
+    hideImgUI();
+    hideIsServerBusyUI();
+    showIsProcessingUI();
+    setTimeout(function() {
+      var formData = new FormData();
+      formData.append('file', $("#file").get(0).files[0]);
+      submitFile(formData);
+      //var dir = "../cpm-backend/"
+      //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+      //getFilelist(path);
+    }, 500);
   });
 }
 

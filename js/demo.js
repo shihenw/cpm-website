@@ -56,7 +56,7 @@ function display(filelist) {
   var path = "img/demo/";
   // new an empty array
   var part_stage_filelist = [];
-  var pose_filelist = ['',''];
+  var pose_filelist = ['', ''];
   for (var i = 0; i < 14; i++) {
     var part = []
     for (var j = 0; j < 6; j++) {
@@ -67,8 +67,8 @@ function display(filelist) {
   // fill in part and stage
   for (var i = 0; i < filelist.length; i++) {
     var res1 = filelist[i].split("_");
-    if(res1[res1.length - 1].indexOf('sg') == -1) {
-      if(res1[res1.length - 1].indexOf('pose') == -1) {
+    if (res1[res1.length - 1].indexOf('sg') == -1) {
+      if (res1[res1.length - 1].indexOf('pose') == -1) {
         pose_filelist[0] = filelist[i];
       } else {
         pose_filelist[1] = filelist[i];
@@ -99,10 +99,10 @@ function findEndNumInStr(str) {
   return parseInt(str.match(/\d+$/)[0]);
 }
 
-function initTemp() {
+function getFilelist(path) {
   var filelist = [];
   $.ajax({
-    url: "img/demo/",
+    url: path,
     success: function(data) {
       $(data).find("a").each(function() {
         var filename = $(this).attr("href");
@@ -115,4 +115,26 @@ function initTemp() {
   });
 }
 
-$(initTemp);
+function init() {
+  $("#file").on("change", function() {
+    var formData = new FormData();
+    formData.append('file', this.files[0]);
+    $.ajax({
+      url: 'http://pearl.vasc.ri.cmu.edu:8080/cpm-backend/process_image',
+      type: 'post',
+      data: formData,
+      cache: false,
+      processData: false,
+      contentType: false,
+      //beforeSend: function(xhr) {
+      //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      //},
+      success: function(result) {
+        console.log(result);
+        getFilelist(result);
+      }
+    });
+  });
+}
+
+$(init);

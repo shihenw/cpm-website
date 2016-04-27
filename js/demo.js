@@ -73,6 +73,11 @@ function getFilelist(path) {
           getFilelist(path);
         }, 2000);
       }
+    },
+    error: function(result) {
+      console.log("server:", result);
+      hideIsProcessingUI();
+      showIsServerBusyUI();
     }
   });
 }
@@ -140,14 +145,12 @@ function init() {
     hideImgUI();
     hideIsServerBusyUI();
     showIsProcessingUI();
-    setTimeout(function() {
-      var formData = new FormData();
-      formData.append('file', $("#file").get(0).files[0]);
-      submitFile(formData);
-      //var dir = "../cpm-backend/"
-      //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
-      //getFilelist(path);
-    }, 500);
+    var formData = new FormData();
+    formData.append('file', $("#file").get(0).files[0]);
+    submitFile(formData);
+    //var dir = "../cpm-backend/"
+    //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+    //getFilelist(path);
   });
 }
 

@@ -156,10 +156,10 @@ function init() {
     hideUI();
     var formData = new FormData();
     formData.append('file', this.files[0]);
-    //submitFile(formData);
-    var dir = "../cpm-backend/"
-    var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
-    getFilelist(path);
+    submitFile(formData);
+    //var dir = "../cpm-backend/"
+    //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+    //getFilelist(path);
   });
 }
 

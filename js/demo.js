@@ -95,7 +95,7 @@ function submitFile(formData) {
         showIsServerBusyUI();
       } else {
         var dir = "../cpm-backend/"
-        var path = dir + result + "/";
+        var path = dir + result.path + "/";
         getFilelist(path);
       }
     },

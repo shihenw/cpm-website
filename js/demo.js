@@ -130,11 +130,15 @@ function init() {
       //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
       //},
       success: function(result) {
+        // hard code the path for now
         console.log(result);
+        result = "../cpm-backend/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14/";
         getFilelist(result);
       }
     });
   });
 }
+
+jQuery.support.cors = true;
 
 $(init);

@@ -227,3 +227,31 @@ html, body {
   margin-top: 60px;
   display: none;
 }
+
+#save-image {
+  font-size: 30px;
+  margin-top: 30px;
+  display: none;
+}
+
+#is-image-saved {
+  margin-top: 10px;
+  display: none;
+}
+
+.custom-button {
+  background-image: none !important;
+  background: #DD5C6A !important;
+  color: white !important;
+  font-family: 'Raleway', Helvetica, Arial, sans-serif !important;
+  outline: none !important;
+  border-radius: 2px !important;
+}
+
+.custom-button:hover {
+  background: #B23946 !important;
+}
+
+.custom-button:active {
+  background: #DD5C6A !important;
+}

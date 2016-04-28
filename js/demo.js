@@ -1,3 +1,6 @@
+var current_uuid;
+var dir = "../cpm-backend/public/uploads/"
+
 function display(filelist, path) {
   // new an empty array
   var part_stage_filelist = [];
@@ -74,8 +77,8 @@ function getFilelist(path) {
         }, 2000);
       }
     },
-    error: function(result) {
-      console.log("server:", result);
+    error: function(response) {
+      console.log("server:", response);
       hideIsProcessingUI();
       showIsServerBusyUI();
     }
@@ -90,24 +93,39 @@ function submitFile(formData) {
     cache: false,
     processData: false,
     contentType: false,
-    //beforeSend: function(xhr) {
-    //  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    //},
-    success: function(result) {
-      console.log("server:", result);
-      if (result == "") {
+    success: function(response) {
+      console.log("server success:", response);
+      if (response == "") {
         hideIsProcessingUI();
         showIsServerBusyUI();
       } else {
-        var dir = "../cpm-backend/"
-        var path = dir + result.path + "/";
+        current_uuid = response.uuid;
+        var path = dir + response.uuid + "/";
         getFilelist(path);
       }
     },
-    error: function(result) {
-      console.log("server:", result);
+    error: function(response) {
+      console.log("server error:", response);
       hideIsProcessingUI();
       showIsServerBusyUI();
+    }
+  });
+}
+
+function saveImgOnServer(formData) {
+  $.ajax({
+    url: 'http://pearl.vasc.ri.cmu.edu:8080/cpm-backend/save_image',
+    type: 'post',
+    data: formData,
+    cache: false,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+      console.log("server success:", response);
+      showIsImgSavedUI();
+    },
+    error: function(response) {
+      console.log("server error:", response);
     }
   });
 }
@@ -132,24 +150,44 @@ function hideImgUI() {
   $("#large-image-container").hide();
   $("#body-part-names").hide();
   $("#small-image-container").hide();
+  $("#save-image").hide();
 }
 
 function showImgUI() {
   $("#large-image-container").show();
   $("#body-part-names").show();
   $("#small-image-container").show();
+  $("#save-image").show();
+}
+
+function showIsImgSavedUI() {
+  $("#is-image-saved").show();
+}
+
+function hideIsImgSavedUI() {
+  $("#is-image-saved").hide();
+}
+
+function createSaveImageButton() {
+  $("#save-image").button().on("click", function() {
+    var formData = new FormData();
+    formData.append("image_uuid", current_uuid);
+    saveImgOnServer(formData);
+  });
 }
 
 function init() {
+  createSaveImageButton();
   $("#file").on("change", function() {
     hideImgUI();
+    hideIsImgSavedUI();
     hideIsServerBusyUI();
     showIsProcessingUI();
     var formData = new FormData();
     formData.append('file', $("#file").get(0).files[0]);
     submitFile(formData);
-    //var dir = "../cpm-backend/"
-    //var path = dir + "/public/uploads/e50a3580-2ee2-4a20-9fad-79db127c1f14" + "/";
+    //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
+    //var path = dir + current_uuid + "/";
     //getFilelist(path);
   });
 }

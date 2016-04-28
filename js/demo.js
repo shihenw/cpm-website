@@ -57,6 +57,7 @@ function getFilelist(path) {
   $.ajax({
     url: path,
     success: function(data) {
+      console.log("server getFilelist success");
       var all_anchor_tags = data.match(/<a[\s]+([^>]+)>((?:.(?!\<\/a\>))*.)<\/a>/g);
       var is_server_processing_complete = false;
       for (var i = 0; i < all_anchor_tags.length; i++) {
@@ -78,7 +79,7 @@ function getFilelist(path) {
       }
     },
     error: function(response) {
-      console.log("server:", response);
+      console.log("server getFilelist error:", response);
       hideIsProcessingUI();
       showIsServerBusyUI();
     }
@@ -94,7 +95,7 @@ function submitFile(formData) {
     processData: false,
     contentType: false,
     success: function(response) {
-      console.log("server success:", response);
+      console.log("server submitFile success:", response);
       if (response == "") {
         hideIsProcessingUI();
         showIsServerBusyUI();
@@ -105,7 +106,7 @@ function submitFile(formData) {
       }
     },
     error: function(response) {
-      console.log("server error:", response);
+      console.log("server submitFile error:", response);
       hideIsProcessingUI();
       showIsServerBusyUI();
     }
@@ -121,11 +122,11 @@ function saveImgOnServer(formData) {
     processData: false,
     contentType: false,
     success: function(response) {
-      console.log("server success:", response);
+      console.log("server saveImgOnServer success:", response);
       showIsImgSavedUI();
     },
     error: function(response) {
-      console.log("server error:", response);
+      console.log("server saveImgOnServer error:", response);
     }
   });
 }

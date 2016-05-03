@@ -150,7 +150,7 @@ function showServerErrorMsg(txt) {
   $("#server-error-msg").text(txt).show();
 }
 
-function hideIsServerBusyUI() {
+function hideServerErrorMsg() {
   $("#server-error-msg").hide();
 }
 
@@ -195,11 +195,16 @@ function init() {
   $("#file").on("change", function() {
     hideImgUI();
     hideIsImgSavedUI();
-    hideIsServerBusyUI();
-    showIsProcessingUI();
+    hideServerErrorMsg();
     var formData = new FormData();
-    formData.append('file', $("#file").get(0).files[0]);
-    submitFile(formData);
+    var file = $("#file").get(0).files[0];
+    if(file) {
+      formData.append('file', $("#file").get(0).files[0]);
+      submitFile(formData);
+      showIsProcessingUI();
+    } else {
+      showServerErrorMsg("No file chosen.");
+    }
     //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
     //var path = dir + current_uuid + "/";
     //getFilelist(path);

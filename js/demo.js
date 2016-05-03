@@ -199,10 +199,10 @@ function init() {
     showIsProcessingUI();
     var formData = new FormData();
     formData.append('file', $("#file").get(0).files[0]);
-    //submitFile(formData);
-    current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
-    var path = dir + current_uuid + "/";
-    getFilelist(path);
+    submitFile(formData);
+    //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
+    //var path = dir + current_uuid + "/";
+    //getFilelist(path);
   });
 }
 

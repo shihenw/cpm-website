@@ -30,14 +30,13 @@ html, body {
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 30px;
   float: left;
-  color: rgb(190, 190, 190);
   margin-top: -6px;
 }
 
 #logo a {
   text-decoration: none;
   font-weight: 700;
-  color: rgb(190, 190, 190);
+  color: rgb(255, 255, 255);
 }
 
 #menu-items {

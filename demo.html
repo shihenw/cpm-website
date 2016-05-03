@@ -33,13 +33,12 @@
       Upload an image or click on a sample image &nbsp;&nbsp;
       <input name="file" type="file" id="file">
     </form>
-    <div id="is-server-busy">
-      The server is busy. Please try again later.
+    <div id="server-error-msg">
     </div>
     <div id="is-processing">
       Processing image ...
     </div>
-    <table id="large-image-container">
+    <table id="large-image-container" cellpadding="0" cellspacing="0">
       <tr>
         <td id="pose-1" class="pose-td-left">
         </td>
@@ -47,58 +46,93 @@
         </td>
       </tr>
     </table>
-    <p id="body-part-names">
-      <a href="javascript:void(0);" data-value="1" id="b1">Head</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="2" id="b2">Neck</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="3" id="b3">R. Shoulder</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="4" id="b4">R. Elbow</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="5" id="b5">R. Wrist</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="6" id="b6">L. Shoulder</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="7" id="b7">L. Elbow</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="8" id="b8">L. Shoulder</a>&nbsp;|&nbsp;
-      <br>
-      <a href="javascript:void(0);" data-value="9" id="b9">R. Hip</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="10" id="b10">R. Knee</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="11" id="b11">R. Ankle</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="12" id="b12">L. Hip</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="13" id="b13">L. Knee</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="14" id="b14">L. Ankle</a>&nbsp;|&nbsp;
-      <a href="javascript:void(0);" data-value="15" id="b15">Background</a>
-    </p>
     </table>
-    <table id="small-image-container">
+    <table id="small-image-container" cellpadding="0" cellspacing="0">
       <tr>
-        <td id="stage-1" class="stage-td-left">
+        <td class="part-text part-td-left">
+          Head
         </td>
-        <td id="stage-2" class="stage-td-left">
+        <td class="part-text part-td-left">
+          Neck
         </td>
-        <td id="stage-3" class="stage-td-left">
+        <td class="part-text part-td-left">
+          R. Shoulder
         </td>
-        <td id="stage-4" class="stage-td-left">
+        <td class="part-text part-td-left">
+          R. Elbow
         </td>
-        <td id="stage-5" class="stage-td-left">
-        </td>
-        <td id="stage-6" class="stage-td-right">
+        <td class="part-text part-td-right">
+          R. Wrist
         </td>
       </tr>
       <tr>
-        <td class="stage-td-left stage-text">
-          stage 1
+        <td id="part-1" class="part-td-left">
         </td>
-        <td class="stage-td-left stage-text">
-          stage 2
+        <td id="part-2" class="part-td-left">
         </td>
-        <td class="stage-td-left stage-text">
-          stage 3
+        <td id="part-3" class="part-td-left">
         </td>
-        <td class="stage-td-left stage-text">
-          stage 4
+        <td id="part-4" class="part-td-left">
         </td>
-        <td class="stage-td-left stage-text">
-          stage 5
+        <td id="part-5" class="part-td-right">
         </td>
-        <td class="stage-td-right stage-text">
-          stage 6
+      </tr>
+      <tr>
+        <td class="part-text part-td-left">
+          L. Shoulder
+        </td>
+        <td class="part-text part-td-left">
+          L. Elbow
+        </td>
+        <td class="part-text part-td-left">
+          L. Wrist
+        </td>
+        <td class="part-text part-td-left">
+          R. Hip
+        </td>
+        <td class="part-text part-td-right">
+          R. Knee
+        </td>
+      </tr>
+      <tr>
+        <td id="part-6" class="part-td-left">
+        </td>
+        <td id="part-7" class="part-td-left">
+        </td>
+        <td id="part-8" class="part-td-left">
+        </td>
+        <td id="part-9" class="part-td-left">
+        </td>
+        <td id="part-10" class="part-td-right">
+        </td>
+      </tr>
+      <tr>
+        <td class="part-text part-td-left">
+          R. Ankle
+        </td>
+        <td class="part-text part-td-left">
+          L. Hip
+        </td>
+        <td class="part-text part-td-left">
+          L. Knee
+        </td>
+        <td class="part-text part-td-left">
+          L. Ankle
+        </td>
+        <td class="part-text part-td-right">
+          Background
+        </td>
+      </tr>
+      <tr>
+        <td id="part-11" class="part-td-left">
+        </td>
+        <td id="part-12" class="part-td-left">
+        </td>
+        <td id="part-13" class="part-td-left">
+        </td>
+        <td id="part-14" class="part-td-left">
+        </td>
+        <td id="part-15" class="part-td-right">
         </td>
       </tr>
     </table>

@@ -3,19 +3,15 @@ var dir = "../cpm-backend/public/uploads/"
 
 function display(filelist, path) {
   // new an empty array
-  var part_stage_filelist = [];
+  var part_filelist = [];
   var pose_filelist = ['', ''];
   for (var i = 0; i < 15; i++) {
-    var part = []
-    for (var j = 0; j < 6; j++) {
-      part.push('');
-    }
-    part_stage_filelist.push(part);
+    part_filelist.push('');
   }
-  // fill in part and stage
+  // fill in part
   for (var i = 0; i < filelist.length; i++) {
     var res1 = filelist[i].split("_");
-    if (res1[res1.length - 1].indexOf('sg') == -1) {
+    if (res1[res1.length - 1].indexOf('part') == -1) {
       if (res1[res1.length - 1].indexOf('pose') == -1) {
         pose_filelist[0] = filelist[i];
       } else {
@@ -24,25 +20,23 @@ function display(filelist, path) {
       continue;
     }
     var res2 = res1[res1.length - 1].split(".");
-    var part_num = findEndNumInStr(res1[res1.length - 2]);
-    var stage_num = findEndNumInStr(res2[res2.length - 2]);
-    part_stage_filelist[part_num - 1][stage_num - 1] = filelist[i];
+    var part_num = findEndNumInStr(res2[res2.length - 2]);
+    part_filelist[part_num - 1] = filelist[i];
   }
-  // add events
-  $("#body-part-names").find("a").on("click", function() {
-    var part_num = $(this).data("value");
-    for (var i = 0; i < 6; i++) {
-      var $img_container = $("#stage-" + (i + 1));
-      $img_container.children().remove();
-      $img_container.append($('<img class="stage-img" src="' + path + part_stage_filelist[part_num - 1][i] + '"/>'));
-    }
-  });
-  $("#b1").click();
   // add pose and original images
-  $("#pose-1").children().remove();
-  $("#pose-1").append($('<img class="pose-img" src="' + path + pose_filelist[0] + '"/>'));
-  $("#pose-2").children().remove();
-  $("#pose-2").append($('<img class="pose-img" src="' + path + pose_filelist[1] + '"/>'));
+  for (var i = 0; i < pose_filelist.length; i++) {
+    var $pose = $("#pose-" + (i + 1));
+    var image_path = path + pose_filelist[i];
+    $pose.children().remove();
+    $pose.append($('<a href="' + image_path + '" target="_blank"><img class="pose-img" src="' + image_path + '"/></a>'));
+  }
+  // add part images
+  for (var i = 0; i < part_filelist.length; i++) {
+    var $part = $("#part-" + (i + 1));
+    var image_path = path + part_filelist[i];
+    $part.children().remove();
+    $part.append($('<a href="' + image_path + '" target="_blank"><img class="part-img" src="' + image_path + '"/></a>'));
+  }
   // show result
   hideIsProcessingUI();
   showImgUI();
@@ -71,7 +65,7 @@ function getFilelist(path) {
       }
       // check if the server complete the GPU processing
       if (is_server_processing_complete) {
-        display(filelist, path);
+        checkPoseMachineMessage(filelist, path);
       } else {
         setTimeout(function() {
           getFilelist(path);
@@ -81,7 +75,28 @@ function getFilelist(path) {
     error: function(response) {
       console.log("server getFilelist error:", response);
       hideIsProcessingUI();
-      showIsServerBusyUI();
+      showServerErrorMsg("Server error. Please try again later.");
+    }
+  });
+}
+
+function checkPoseMachineMessage(filelist, path) {
+  $.ajax({
+    url: path + "/message",
+    success: function(data) {
+      console.log("server checkPoseMachineMessage success");
+      var line_message = data.split("\n");
+      if (line_message[0] == "success") {
+        display(filelist, path);
+      } else {
+        hideIsProcessingUI();
+        showServerErrorMsg(line_message[1]);
+      }
+    },
+    error: function(response) {
+      console.log("server checkPoseMachineMessage error:", response);
+      hideIsProcessingUI();
+      showServerErrorMsg("Server error. Please try again later.");
     }
   });
 }
@@ -98,7 +113,7 @@ function submitFile(formData) {
       console.log("server submitFile success:", response);
       if (response == "") {
         hideIsProcessingUI();
-        showIsServerBusyUI();
+        showServerErrorMsg("The server is busy. Please try again later.");
       } else {
         current_uuid = response.uuid;
         var path = dir + response.uuid + "/";
@@ -108,7 +123,7 @@ function submitFile(formData) {
     error: function(response) {
       console.log("server submitFile error:", response);
       hideIsProcessingUI();
-      showIsServerBusyUI();
+      showServerErrorMsg("Server error. Please try again later.");
     }
   });
 }
@@ -131,12 +146,12 @@ function saveImgOnServer(formData) {
   });
 }
 
-function showIsServerBusyUI() {
-  $("#is-server-busy").show();
+function showServerErrorMsg(txt) {
+  $("#server-error-msg").text(txt).show();
 }
 
 function hideIsServerBusyUI() {
-  $("#is-server-busy").hide();
+  $("#server-error-msg").hide();
 }
 
 function showIsProcessingUI() {
@@ -149,14 +164,12 @@ function hideIsProcessingUI() {
 
 function hideImgUI() {
   $("#large-image-container").hide();
-  $("#body-part-names").hide();
   $("#small-image-container").hide();
   $("#save-image").hide();
 }
 
 function showImgUI() {
   $("#large-image-container").show();
-  $("#body-part-names").show();
   $("#small-image-container").show();
   $("#save-image").show();
 }
@@ -186,10 +199,10 @@ function init() {
     showIsProcessingUI();
     var formData = new FormData();
     formData.append('file', $("#file").get(0).files[0]);
-    submitFile(formData);
-    //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
-    //var path = dir + current_uuid + "/";
-    //getFilelist(path);
+    //submitFile(formData);
+    current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
+    var path = dir + current_uuid + "/";
+    getFilelist(path);
   });
 }
 

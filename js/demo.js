@@ -1,5 +1,6 @@
 var current_uuid;
 var dir = "../cpm-backend/public/uploads/"
+var timer;
 
 function display(filelist, path) {
   // new an empty array
@@ -67,7 +68,7 @@ function getFilelist(path) {
       if (is_server_processing_complete) {
         checkPoseMachineMessage(filelist, path);
       } else {
-        setTimeout(function() {
+        timer = setTimeout(function() {
           getFilelist(path);
         }, 2000);
       }
@@ -192,18 +193,24 @@ function createSaveImageButton() {
   });
 }
 
+function actionBeforeSubmit() {
+  clearTimeout(timer);
+  hideImgUI();
+  hideIsImgSavedUI();
+  hideServerErrorMsg();
+}
+
 function init() {
   createSaveImageButton();
   $("#url").on("change", function() {
+    actionBeforeSubmit();
     var formData = new FormData();
     formData.append('url', $("#url").val());
     submitFile(formData);
     showIsProcessingUI();
   });
   $("#file").on("change", function() {
-    hideImgUI();
-    hideIsImgSavedUI();
-    hideServerErrorMsg();
+    actionBeforeSubmit();
     var formData = new FormData();
     var file = $("#file").get(0).files[0];
     if (file) {

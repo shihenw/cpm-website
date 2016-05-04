@@ -2,7 +2,9 @@
 <html>
 <head>
   <%= csrf_meta_tag %>
-  <meta content="b8d6723ee5e135d58675948581b86a6e9eb5577b403e639626e371203361210874bf7cc799452a873d849ada2fe91d5fd40189e364a55942a103f999e0deacad" name="csrf-token" />
+  <meta
+    content="b8d6723ee5e135d58675948581b86a6e9eb5577b403e639626e371203361210874bf7cc799452a873d849ada2fe91d5fd40189e364a55942a103f999e0deacad"
+    name="csrf-token"/>
   <title>Convolutional Pose Machines</title>
   <link href="css/main.css" media="screen" rel="stylesheet" type="text/css"/>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300' rel='stylesheet' type='text/css'>
@@ -29,10 +31,73 @@
 </div>
 <div id="content-container">
   <div id="content">
-    <form enctype="multipart/form-data" id="file-form" method="post" action="">
-      Upload an image or click on a sample image &nbsp;&nbsp;
-      <input name="file" type="file" id="file">
-    </form>
+    <table id="sample-image-container" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/1.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/2.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/3.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/4.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img portrait" src="img/sample/5.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/6.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/7.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/8.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-left">
+          <div class="thumbnail">
+            <img class="sample-img" src="img/sample/9.jpg"/>
+          </div>
+        </td>
+        <td class="sample-td-right">
+          <div class="thumbnail">
+            <img class="sample-img portrait" src="img/sample/10.jpg"/>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table id="file-table">
+      <tr>
+        <td>
+          Click on a sample image above, upload an image, or paste an image url.
+        </td>
+      </tr>
+      <tr>
+        <td valign="middle">
+          <label id="file-label">File:&nbsp;</label><input name="file" type="file" id="file">
+          &nbsp;&nbsp;<label id="url-label">Url:&nbsp;</label><input name="url" type="text" id="url">
+        </td>
+      </tr>
+    </table>
     <div id="server-error-msg">
     </div>
     <div id="is-processing">
@@ -136,7 +201,11 @@
         </td>
       </tr>
     </table>
-    <input type="button" id="save-image" class="custom-button" value="The result does not look correct">
+    <p id="save-image-txt">
+      Let us know if you are not satisfied with the result. This will help us improve the system.
+    </p>
+    <input type="button" id="save-image-btn" class="custom-button" value="The result does not look correct!">
+
     <div id="is-image-saved">
       We received your feedback. Thank you!
     </div>

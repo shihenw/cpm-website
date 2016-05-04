@@ -165,13 +165,15 @@ function hideIsProcessingUI() {
 function hideImgUI() {
   $("#large-image-container").hide();
   $("#small-image-container").hide();
-  $("#save-image").hide();
+  $("#save-image-btn").hide();
+  $("#save-image-txt").hide();
 }
 
 function showImgUI() {
   $("#large-image-container").show();
   $("#small-image-container").show();
-  $("#save-image").show();
+  $("#save-image-btn").show();
+  $("#save-image-txt").show();
 }
 
 function showIsImgSavedUI() {
@@ -183,7 +185,7 @@ function hideIsImgSavedUI() {
 }
 
 function createSaveImageButton() {
-  $("#save-image").button().on("click", function() {
+  $("#save-image-btn").button().on("click", function() {
     var formData = new FormData();
     formData.append("image_uuid", current_uuid);
     saveImgOnServer(formData);
@@ -192,22 +194,31 @@ function createSaveImageButton() {
 
 function init() {
   createSaveImageButton();
+  $("#url").on("change", function() {
+    var formData = new FormData();
+    formData.append('url', $("#url").val());
+    submitFile(formData);
+    showIsProcessingUI();
+  });
   $("#file").on("change", function() {
     hideImgUI();
     hideIsImgSavedUI();
     hideServerErrorMsg();
     var formData = new FormData();
     var file = $("#file").get(0).files[0];
-    if(file) {
+    if (file) {
       formData.append('file', $("#file").get(0).files[0]);
       submitFile(formData);
       showIsProcessingUI();
+      //////////////////////////////////////////////////
+      /* uncomment this block for localhost debugging */
+      //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
+      //var path = dir + current_uuid + "/";
+      //getFilelist(path);
+      //////////////////////////////////////////////////
     } else {
       showServerErrorMsg("No file chosen.");
     }
-    //current_uuid = "e50a3580-2ee2-4a20-9fad-79db127c1f14";
-    //var path = dir + current_uuid + "/";
-    //getFilelist(path);
   });
 }
 

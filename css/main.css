@@ -156,6 +156,69 @@ html, body {
   margin-bottom: 10px;
 }
 
+#file-table {
+  width: 100%;
+}
+
+#file {
+  width: 200px;
+  vertical-align: middle;
+}
+
+#file-label {
+  vertical-align: middle;
+}
+
+#url {
+  width: 250px;
+  vertical-align: middle;
+}
+
+#url-label {
+  vertical-align: middle;
+}
+
+.sample-td-left {
+  margin: 0;
+  padding-right: 10px;
+}
+
+.sample-td-right {
+  margin: 0;
+  padding-right: 0;
+}
+
+.sample-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.sample-img.portrait {
+  width: 100%;
+  height: auto;
+}
+
+.thumbnail {
+  border: 1px solid rgba(0, 0, 0, 0);
+  margin: 0;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnail:hover {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
 .part-td-left {
   margin: 0;
   padding-right: 10px;
@@ -213,6 +276,12 @@ html, body {
   width: 100%;
 }
 
+#sample-image-container {
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
 #small-image-container {
   border-spacing: 0;
   width: 100%;
@@ -247,8 +316,12 @@ html, body {
   display: none;
 }
 
-#save-image {
+#save-image-btn {
   font-size: 30px;
+  display: none;
+}
+
+#save-image-txt {
   margin-top: 40px;
   display: none;
 }

@@ -202,6 +202,10 @@ function actionBeforeSubmit() {
 
 function init() {
   createSaveImageButton();
+  $("#sample-image-container .thumbnail").on("click", function() {
+    var img_url = $(this).find("img").attr("src");
+    $("#url").val(img_url).change();
+  });
   $("#url").on("change", function() {
     actionBeforeSubmit();
     var formData = new FormData();

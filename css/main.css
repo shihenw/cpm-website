@@ -31,25 +31,26 @@ html, body {
   font-size: 30px;
   float: left;
   margin-top: -6px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #logo a {
   text-decoration: none;
   font-weight: 700;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #menu-items {
   float: right;
   margin-top: 4px;
   font-size: 17px;
-  color: rgb(190, 190, 190);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #menu-items a {
   text-decoration: none;
   font-weight: 500;
-  color: rgb(190, 190, 190);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 #menu-items a:hover {
